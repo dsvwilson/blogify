@@ -1,4 +1,3 @@
-from pydantic import BaseModel
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from datetime import date
 
@@ -36,9 +35,7 @@ def read_post(id: int) -> BlogPostData:
     
 def update_post(id: int, title: str | None = None, post_content: str | None = None, slug: str | None = None) -> bool:
     with Session(engine) as session:
-        statement = select(BlogPostData).where(BlogPostData.id == id)
-        result = session.exec(statement)
-        blogpost = result.one()
+        blogpost = session.get(BlogPostData, id)
 
         if title:
             blogpost.title = title
@@ -50,6 +47,15 @@ def update_post(id: int, title: str | None = None, post_content: str | None = No
         session.add(blogpost)
         session.commit()
         session.refresh(blogpost)
+
+def delete_post_db(id: int) -> str:
+    with Session(engine) as session:
+        blogpost = session.get(BlogPostData, id)
+        if not blogpost:
+            return None
+        session.delete(blogpost)
+        session.commit()
+    return f"Post {id} has been permanently deleted."
 
 if __name__ == "__main__":
     create_database()

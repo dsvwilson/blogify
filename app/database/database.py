@@ -1,17 +1,7 @@
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from sqlmodel import Session, select
+from .config import engine
+from app.models.blogpost import BlogPostData
 from datetime import date
-
-class BlogPostData(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    title: str
-    date: date
-    post_content: str
-    slug: str
-
-engine = create_engine("sqlite:///database.db")
-
-def create_database():
-    SQLModel.metadata.create_all(engine)
 
 def create_post_row(title: str, date: date, post_content: str, slug: str) -> int:
     blogpost = BlogPostData(title=title, date=date, post_content=post_content, slug=slug)
@@ -56,6 +46,3 @@ def delete_post_db(id: int) -> str:
         session.delete(blogpost)
         session.commit()
     return f"Post {id} has been permanently deleted."
-
-if __name__ == "__main__":
-    create_database()

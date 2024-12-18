@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.encoders import jsonable_encoder
-from classes import BlogPost
-from schema import AddBlogPostSchema, EditBlogPostSchema
-from db import BlogPostData, create_post_row, read_post, read_posts, update_post, delete_post_db
+from app.services.classes.blogpost import BlogPost
+from app.services.schema.blogpost import AddBlogPostSchema, EditBlogPostSchema
+from app.models.blogpost import BlogPostData
+from app.database.database import create_post_row, read_post, read_posts, update_post, delete_post_db
 
 app = FastAPI()
 

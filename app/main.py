@@ -12,5 +12,5 @@ api_groups = [
 
 app = FastAPI(openapi_tags=api_groups)
 
-app.include_router(blogpost.router)
-app.include_router(comment.router)
+app.include_router(blogpost.router, tags=["Posts"], prefix="/v1")
+app.include_router(comment.router, tags=["Comments"], prefix="/v1")

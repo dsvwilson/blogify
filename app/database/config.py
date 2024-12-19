@@ -11,9 +11,6 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(url=DATABASE_URL)
 
 
-# residual code to create a database
-def create_database():
+# create the tables in the database
+def create_tables():
     SQLModel.metadata.create_all(engine)
-
-if __name__ == "__main__":
-    create_database()

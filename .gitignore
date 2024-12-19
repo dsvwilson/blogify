@@ -2,6 +2,7 @@
 /__pycache__
 /.env
 /app/__pycache__
+/app/api/__pycache__
 /app/database/__pycache__
 /app/models/__pycache__
 /app/services/__pycache__

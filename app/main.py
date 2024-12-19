@@ -1,53 +1,16 @@
-from fastapi import FastAPI, HTTPException
-from app.services.classes.blogpost import BlogPost
-from app.services.schema.blogpost import AddBlogPostSchema, EditBlogPostSchema
-from app.models.blogpost import BlogPostData
-from app.database.database import create_post_row, read_post, read_posts, update_post, delete_post_db
+from fastapi import FastAPI
+from app.api import blogpost, comment
 
-app = FastAPI()
+api_groups = [
+    {
+        "name": "Posts"
+    },
+    {
+        "name": "Comments"
+    }
+]
 
-@app.post("/posts/new")
-async def create_post(create: AddBlogPostSchema) -> str:
-    blogpost = BlogPost(
-        title=create.title, post_content=create.post_content
-    )
-    blogpost.date = blogpost.get_date()
-    blogpost.slug = blogpost.build_slug()
-    post_id = create_post_row(
-        title=blogpost.title, date=blogpost.date, post_content=blogpost.post_content, slug=blogpost.slug
-    )
-    return f"Successful!"
+app = FastAPI(openapi_tags=api_groups)
 
-
-@app.get("/posts")
-async def all_posts(offset: int | None = 0, limit: int | None = 10) -> list[BlogPostData]:
-    return read_posts(offset, limit)
-
-
-@app.get("/posts/{post_id}")
-async def a_post(post_id: int) -> BlogPostData:
-    post = read_post(post_id)
-    if post:
-        return post
-    else:
-        raise HTTPException(status_code=404, detail="Post unavailable")
-    
-
-@app.patch("/posts/{post_id}")
-async def edit_post(post_id: int, edit: EditBlogPostSchema) -> str:
-    post_edit = BlogPost()
-    try:
-        updated_post = post_edit.edit_post(post_id=post_id, edit=edit, read_post=read_post, data_model=BlogPostData)
-    except AttributeError:
-        raise HTTPException(status_code=404, detail="Post unavailable")
-    update_post(id=post_id, title=updated_post.title, post_content=updated_post.post_content, slug=updated_post.slug)
-
-    return "Successfully edited"
-
-@app.delete("/posts/{post_id}")
-def delete_post(post_id: int):
-    delete_operation = delete_post_db(post_id)
-    if delete_operation:
-        return delete_operation
-    else:
-        raise HTTPException(status_code=404, detail="Post unavailable")
+app.include_router(blogpost.router)
+app.include_router(comment.router)

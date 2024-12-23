@@ -2,7 +2,7 @@ Hello there! 😊👋👋👋
 
 I'm Victor Wilson and I enjoy solving problems with software. This is my effort to solve a problem of my own by creating a solution that allows me to write and manage blog posts on my soon-to-be-created website. Thought to get started on the blog editor first. 😉
 
-I've deployed the project on the Internet so you can review the documentation here as well as test the endpoints that do not require authentication.
+I've deployed the project on the Internet so you can review the documentation [here](https://blogify-production-1a01.up.railway.app/docs) (and also [redoc-style](https://blogify-production-1a01.up.railway.app/redoc)) as well as test the endpoints that do not require authentication.
 
 # So, Blogify?
 

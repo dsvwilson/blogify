@@ -9,7 +9,6 @@ class BlogPost:
         self.post_content = post_content
         self.slug = slug
 
-
     # getters and setters of instance variables
     @property
     def title(self):
@@ -38,11 +37,10 @@ class BlogPost:
     @property
     def slug(self):
         return self._slug
-    
+
     @slug.setter
     def slug(self, slug):
         self._slug = slug
-
 
     # instance methods of the class
     def get_date(self) -> datetime.date:
@@ -54,7 +52,7 @@ class BlogPost:
         self.slug = self.slug.replace(" ", "-")
         self.slug = re.sub(r"[\.,\?\:\+!'\"]", "", self.slug)
         return self.slug
-    
+
     def edit_post(self, post_id, edit, read_post, data_model):
         self.post_id = post_id
         self.edit = edit

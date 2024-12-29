@@ -7,5 +7,6 @@
 /app/models/__pycache__
 /app/services/__pycache__
 /app/services/classes/__pycache__
+/app/services/comment_genuinity_helper/__pycache__
 /app/services/schema/__pycache__
 /tests/__pycache__

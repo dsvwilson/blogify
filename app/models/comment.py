@@ -6,3 +6,4 @@ class CommentData(SQLModel, table=True):
     date: date
     content: str
     post_id: int = Field(foreign_key="blogpostdata.id")
+    comment_genuinity: int

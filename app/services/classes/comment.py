@@ -2,9 +2,10 @@ import datetime
 
 
 class Comment:
-    def __init__(self, date="", content=""):
+    def __init__(self, date="", content="", comment_genuinity=""):
         self.date = date
         self.content = content
+        self.comment_genuinity = comment_genuinity
 
     # getters and setters of the instance variables
     @property
@@ -22,6 +23,14 @@ class Comment:
     @content.setter
     def content(self, content):
         self._content = content.strip()
+
+    @property
+    def comment_genuinity(self):
+        return self._comment_genuinity
+    
+    @comment_genuinity.setter
+    def comment_genuinity(self, comment_genuinity):
+        self._comment_genuinity = comment_genuinity
 
     # static methods
     @staticmethod  # returns a 404 error for when a post is not found

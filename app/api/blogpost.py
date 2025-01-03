@@ -18,11 +18,11 @@ async def get_current_active_user(current_user: Annotated[User, Depends(User.get
         return current_user
 
 
-# create a new blog post -> returns a "success" message alongside the post ID
+# create a new blog post -> returns the newly created post
 #
 # requires authentication
 @router.post("/posts/new")
-async def create_post(current_user: Annotated[User, Depends(get_current_active_user)], create: AddBlogPostSchema) -> str:
+async def create_post(current_user: Annotated[User, Depends(get_current_active_user)], create: AddBlogPostSchema) -> BlogPostData:
     blogpost = BlogPost(
         title=create.title, post_content=create.post_content
     )
@@ -31,7 +31,7 @@ async def create_post(current_user: Annotated[User, Depends(get_current_active_u
     post_id = create_post_row(
         title=blogpost.title, date=blogpost.date, post_content=blogpost.post_content, slug=blogpost.slug
     )
-    return f"Post {post_id} has been successfully created"
+    return BlogPostData(id=post_id, title=blogpost.title, date=blogpost.date, post_content=blogpost.post_content, slug=blogpost.slug)
 
 # get all the posts from the database with pagination defaulting to 10 elements -> returns a list of posts
 @router.get("/posts")
